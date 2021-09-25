@@ -6,4 +6,4 @@ class Settings(BaseSettings):
     secret: str
 
 
-settings = Settings()
+settings = Settings(".env")
