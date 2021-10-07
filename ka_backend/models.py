@@ -41,4 +41,25 @@ class House(ormar.Model):
     nama: str = ormar.String(max_length=32)
 
 
+class SIG(ormar.Model):
+    class Meta(BaseMeta):
+        tablename = "sigs"
+
+    id: int = ormar.Integer(primary_key=True)
+    nama: str = ormar.String(max_length=160)
+    detail: str = ormar.Text()
+    foto: str = ormar.Text(nullable=True)
+    is_it_interest = ormar.Boolean(default=True)
+
+
+class Competition(ormar.Model):
+    class Meta(BaseMeta):
+        tablename = "competitions"
+
+    id: int = ormar.Integer(primary_key=True)
+    nama: str = ormar.String(max_length=160)
+    foto: str = ormar.Text(nullable=True)
+    link: str = ormar.Text()
+
+
 Student.update_forward_refs()
