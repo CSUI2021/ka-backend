@@ -2,9 +2,8 @@ from datetime import timedelta
 
 from fastapi_login import LoginManager
 
-from ka_backend.models import Student
 from ka_backend.helper.settings import settings
-
+from ka_backend.models import Student
 
 manager = LoginManager(
     settings.secret,

@@ -1,6 +1,7 @@
 import databases
-import sqlalchemy
 import ormar
+import sqlalchemy
+
 from ka_backend.helper.settings import settings
 
 database = databases.Database(settings.database_url)

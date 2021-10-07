@@ -1,7 +1,8 @@
-from fastapi import FastAPI, Depends
+from fastapi import Depends, FastAPI
+
 from ka_backend.helper.database import database
-from ka_backend.plugins import manager
 from ka_backend.models import Student
+from ka_backend.plugins import manager
 from ka_backend.routes.auth import router as AuthRouter
 
 app = FastAPI()

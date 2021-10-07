@@ -1,7 +1,9 @@
-from ka_backend.helper.database import BaseMeta
-import ormar
 from typing import List
+
+import ormar
 from pydantic.typing import ForwardRef
+
+from ka_backend.helper.database import BaseMeta
 
 HouseRef = ForwardRef("House")
 StudentRef = ForwardRef("Student")

@@ -1,7 +1,9 @@
+from typing import cast
+
 from black import traceback
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
-from typing import cast
+
 from ka_backend.helper.settings import settings
 from ka_backend.models import Student
 from ka_backend.plugins import manager
