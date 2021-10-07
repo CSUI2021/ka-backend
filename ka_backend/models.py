@@ -1,6 +1,6 @@
 from ka_backend.helper.database import BaseMeta
 import ormar
-from typing import TYPE_CHECKING, List
+from typing import List
 from pydantic.typing import ForwardRef
 
 HouseRef = ForwardRef("House")
@@ -16,10 +16,12 @@ class Student(ormar.Model):
     # Data diri
     nama: str = ormar.String(max_length=100)
     jurusan: str = ormar.String(
-        max_length=32, choices=["ilmu_komputer", "sistem_informasi"]
+        max_length=32,
+        choices=["ilmu_komputer", "sistem_informasi"],
+        nullable=True,
     )
-    ttl: str = ormar.String(max_length=100)
-    hobi: str = ormar.String(max_length=50)
+    ttl: str = ormar.String(max_length=100, nullable=True)
+    hobi: str = ormar.String(max_length=50, nullable=True)
 
     # Social media
     twitter: str = ormar.String(max_length=16, nullable=True)
@@ -27,8 +29,8 @@ class Student(ormar.Model):
     instagram: str = ormar.String(max_length=32, nullable=True)
     karya: List[str] = ormar.JSON(nullable=True)  # type: ignore
 
-    foto_diri: str = ormar.Text()
-    video_diri: str = ormar.Text()
+    foto_diri: str = ormar.Text(nullable=True)
+    video_diri: str = ormar.Text(nullable=True)
     house = ormar.ForeignKey(HouseRef, related_name="members")
     house_led = ormar.ForeignKey(HouseRef, related_name="ketua")
 
