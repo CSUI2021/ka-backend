@@ -4,9 +4,11 @@ from ka_backend.helper.database import database
 from ka_backend.models import Student
 from ka_backend.plugins import manager
 from ka_backend.routes.auth import router as AuthRouter
+from ka_backend.routes.student import router as StudentRouter
 
 app = FastAPI()
 app.include_router(AuthRouter)
+app.include_router(StudentRouter)
 
 
 @app.get("/")
