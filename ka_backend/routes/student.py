@@ -31,7 +31,12 @@ async def list(search_name: Optional[str] = None, page: int = Query(1)):
     return students
 
 
-@router.get("/{npm}", status_code=status.HTTP_200_OK, response_model=Student)
+@router.get(
+    "/{npm}",
+    status_code=status.HTTP_200_OK,
+    response_model=Student,
+    response_model_exclude={"npm"},
+)
 async def show(npm: int):
     student = await Student.objects.select_related("house").get(npm=npm)
     return student
