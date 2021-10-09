@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from ka_backend.helper.database import database
+from .routes import student
 
 app = FastAPI()
+
+app.include_router(student.router)
 
 
 @app.get("/")

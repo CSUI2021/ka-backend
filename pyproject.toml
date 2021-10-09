@@ -9,6 +9,8 @@ python = "^3.7"
 fastapi = {extras = ["all"], version = "^0.68.1"}
 ormar = "^0.10.19"
 aiosqlite = "^0.17.0"
+mysqlclient = "^2.0.3"
+aiomysql = "^0.0.21"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
