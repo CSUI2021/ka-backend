@@ -6,12 +6,13 @@ from ka_backend.plugins import manager
 from ka_backend.routes.auth import router as AuthRouter
 from ka_backend.routes.sig import router as SigRouter
 from ka_backend.routes.competition import router as CompetitionRouter
-
+from ka_backend.routes.student import router as StudentRouter
 
 app = FastAPI()
 app.include_router(AuthRouter)
 app.include_router(SigRouter)
 app.include_router(CompetitionRouter)
+app.include_router(StudentRouter)
 
 
 @app.get("/")
