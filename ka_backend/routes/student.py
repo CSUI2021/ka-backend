@@ -1,6 +1,6 @@
 from os import stat
 from fastapi import APIRouter, status, Query
-from typing import Optional, List
+from typing import Optional, List, Literal
 from ..models import House, Student
 
 router = APIRouter(prefix="/student")
@@ -12,22 +12,33 @@ router = APIRouter(prefix="/student")
     response_model=List[Student],
     response_model_include={"nama", "house", "jurusan", "foto_diri"},
 )
-async def list(search_name: Optional[str] = None, page: int = Query(1)):
-    if search_name:
-        students = (
-            await Student.objects.select_related("house")
-            .filter(nama__icontains=search_name)
-            .order_by("nama")
-            .paginate(page=page, page_size=10)
-            .all()
-        )
-    else:
-        students = (
-            await Student.objects.select_related("house")
-            .order_by("nama")
-            .paginate(page=page, page_size=10)
-            .all()
-        )
+async def list(
+    name: Optional[str] = None,
+    major: Optional[Literal["ilmu_komputer", "sistem_informasi"]] = None,
+    house: Optional[str] = None,
+    sort: Optional[Literal["asc", "desc"]] = "asc",
+    page: int = Query(1),
+):
+
+    students = Student.objects.select_related("house")
+
+    if name:
+        students = students.filter(nama__icontains=name)
+
+    if major:
+        students = students.filter(jurusan__exact=major)
+
+    if house:
+        students = students.filter(house__nama__exact=house)
+
+    if sort == "asc":
+        students = students.order_by("nama")
+
+    elif sort == "desc":
+        students = students.order_by("-nama")
+
+    students = await students.paginate(page=page, page_size=10).all()
+
     return students
 
 
