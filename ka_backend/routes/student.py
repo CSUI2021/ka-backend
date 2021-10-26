@@ -16,7 +16,7 @@ async def list(
     major: Optional[Literal["ilmu_komputer", "sistem_informasi"]] = None,
     house: Optional[str] = None,
     sort: Optional[Literal["asc", "desc"]] = "asc",
-    page: int = Query(1),
+    page: int = Query(1, ge=1),
 ):
 
     students = Student.objects.select_related("house")
