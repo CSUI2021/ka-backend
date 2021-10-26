@@ -1,4 +1,5 @@
 import json
+import os
 import pytest
 from ka_backend.app import app
 from fastapi.testclient import TestClient
@@ -14,6 +15,12 @@ def client():
 @pytest.fixture(autouse=True)
 @pytest.mark.asyncio
 async def setup_db():
+    import sqlalchemy
+    from ka_backend.helper.database import settings, metadata
+
+    engine = sqlalchemy.create_engine(settings.database_url)
+    metadata.create_all(engine)
+
     HOUSES = [
         "Space",
         "Musical",
@@ -28,7 +35,7 @@ async def setup_db():
         "Horror",
         "Romance",
     ]
-    await House.objects.bulk_create([House(name=name) for name in HOUSES])
+    await House.objects.bulk_create([House(nama=name) for name in HOUSES])
 
     with open("tests/data/users.json", "r") as f:
         await Student.objects.bulk_create([Student(**data) for data in json.load(f)])
@@ -36,7 +43,10 @@ async def setup_db():
     with open("tests/data/sig.json", "r") as f:
         await SIG.objects.bulk_create([SIG(**data) for data in json.load(f)])
 
-    with open("tests/data/competition.json", "r") as f:
+    with open("tests/data/competitions.json", "r") as f:
         await Competition.objects.bulk_create(
             [Competition(**data) for data in json.load(f)]
         )
+    yield
+    metadata.drop_all(engine)
+    os.remove("test.db")
