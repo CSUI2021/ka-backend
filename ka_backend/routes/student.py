@@ -3,7 +3,7 @@ from fastapi import APIRouter, status, Query
 from typing import Optional, List
 from ..models import House, Student
 
-router = APIRouter()
+router = APIRouter(prefix="/auth")
 
 
 @router.get(
