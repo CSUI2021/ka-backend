@@ -11,4 +11,30 @@
     "foto_diri": null,
     "video_diri": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     "house": 1
+}, {
+    "npm": 123,
+    "nama": "Sebuah Nama",
+    "jurusan": "ilmu_komputer",
+    "ttl": "Jakarta, 19 Agustus 1969",
+    "hobi": "Tidur",
+    "twitter": null,
+    "line": null,
+    "instagram": null,
+    "karya": null,
+    "foto_diri": null,
+    "video_diri": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "house": 2
+}, {
+    "npm": 111,
+    "nama": "ZzzzzNama",
+    "jurusan": "sistem_informasi",
+    "ttl": "Jakarta, 12 Agustus 2003",
+    "hobi": "Coding",
+    "twitter": null,
+    "line": null,
+    "instagram": null,
+    "karya": null,
+    "foto_diri": null,
+    "video_diri": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "house": 1
 }]
