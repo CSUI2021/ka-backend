@@ -1,13 +1,15 @@
 from fastapi.testclient import TestClient
 
 
-def test_student_list(client: TestClient):
+def test_list(client: TestClient):
     response = client.get("/student/list")
     assert response.status_code == 200
 
     result = response.json()
     assert len(result) == 3
 
+
+def test_pagination(client: TestClient):
     ####################
     # Empty page
     response = client.get("/student/list?page=2")
@@ -17,8 +19,18 @@ def test_student_list(client: TestClient):
     assert len(result) == 0
 
     ####################
+    # Non-positive page
+    response = client.get("/student/list?page=0")
+    assert response.status_code == 422
+
+    response = client.get("/student/list?page=-1")
+    assert response.status_code == 422
+
+
+def test_search(client: TestClient):
+    ####################
     # Search
-    response = client.get("/student/list?search_name=Nama")
+    response = client.get("/student/list?name=Nama")
     assert response.status_code == 200
 
     result = response.json()
@@ -26,6 +38,53 @@ def test_student_list(client: TestClient):
     assert len(names) == 2
     assert "ZzzzzNama" in names
     assert "Sebuah Nama" in names
+
+    ####################
+    # Sorting
+    response = client.get("/student/list?sort=desc")
+    assert response.status_code == 200
+
+    result = response.json()
+    assert result[0]["nama"] == "ZzzzzNama"
+
+    ####################
+    # Invalid sorting
+    response = client.get("/student/list?sort=invalid")
+    assert response.status_code == 422
+
+
+def test_filters(client: TestClient):
+    ####################
+    # House filter
+    response = client.get("/student/list?house=Space")
+    assert response.status_code == 200
+
+    result = response.json()
+    assert len(result) == 2
+    assert result[0]["house"]["nama"] == "Space"
+
+    ####################
+    # Nonexistent house
+    response = client.get("/student/list?house=nonexistent")
+    assert response.status_code == 200
+
+    result = response.json()
+    assert len(result) == 0
+
+    ####################
+    # Major filter
+    response = client.get("/student/list?major=sistem_informasi")
+    assert response.status_code == 200
+
+    result = response.json()
+    assert len(result) == 1
+    assert result[0]["nama"] == "ZzzzzNama"
+    assert result[0]["jurusan"] == "sistem_informasi"
+
+    ####################
+    # Invalid major
+    response = client.get("/student/list?major=invalid")
+    assert response.status_code == 422
 
 
 def test_student_detail(client: TestClient):
