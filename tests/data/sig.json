@@ -1,0 +1,11 @@
+[{
+    "nama":"Test SIG",
+    "detail": "Sebuah Test SIG",
+    "foto": "https://google.com",
+    "is_it_interest": false
+}, {
+    "nama":"Test SIG2",
+    "detail": "Lainnya Test SIG",
+    "foto": null,
+    "is_it_interest": true
+}]
