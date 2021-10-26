@@ -1,7 +1,6 @@
-from os import stat
 from fastapi import APIRouter, status, Query
 from typing import Optional, List, Literal
-from ..models import House, Student
+from ka_backend.models import Student
 
 router = APIRouter(prefix="/student")
 
