@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Query
+from fastapi import APIRouter, status, Query, HTTPException
 from typing import Optional, List, Literal
 from ka_backend.models import Student
 
@@ -43,5 +43,7 @@ async def list(
     response_model_exclude={"npm"},
 )
 async def show(npm: int):
-    student = await Student.objects.select_related("house").get(npm=npm)
+    student = await Student.objects.select_related("house").get_or_none(npm=npm)
+    if not student:
+        raise HTTPException(status_code=404, detail="No such student found.")
     return student

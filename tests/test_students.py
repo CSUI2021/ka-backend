@@ -107,3 +107,4 @@ def test_student_detail(client: TestClient):
     # 404 Response
     response = client.get("/student/1")
     assert response.status_code == 404
+    assert response.json() == {"detail": "No such student found."}
