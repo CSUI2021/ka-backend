@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
 if "pytest" in sys.modules:
     settings = Settings(
-        database_url="sqlite://:memory:",
+        database_url="sqlite:///test.db",
         secret="TEST",
         hostname="http://localhost:3000",
     )
