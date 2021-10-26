@@ -1,5 +1,7 @@
 from typing import List
+
 from fastapi import APIRouter, Query
+
 from ka_backend.models import Competition
 
 router = APIRouter(prefix="/competition")

@@ -1,5 +1,7 @@
-from fastapi import APIRouter, status, Query, HTTPException
-from typing import Optional, List, Literal
+from typing import List, Literal, Optional
+
+from fastapi import APIRouter, HTTPException, Query, status
+
 from ka_backend.models import Student
 
 router = APIRouter(prefix="/student")

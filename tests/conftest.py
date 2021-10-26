@@ -1,9 +1,10 @@
 import json
 import os
+
 import pytest
-from ka_backend.app import app
 from fastapi.testclient import TestClient
 
+from ka_backend.app import app
 from ka_backend.models import SIG, Competition, House, Student
 
 
@@ -16,7 +17,8 @@ def client():
 @pytest.mark.asyncio
 async def setup_db():
     import sqlalchemy
-    from ka_backend.helper.database import settings, metadata
+
+    from ka_backend.helper.database import metadata, settings
 
     engine = sqlalchemy.create_engine(settings.database_url)
     metadata.create_all(engine)
