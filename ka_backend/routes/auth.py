@@ -36,10 +36,12 @@ async def callback(ticket: str = Query(...)):
             detail="This service is only available for Faculty of Computer Science students.",
         )
 
-    kd = cast(KDAttributes, kd)
     user = await Student.objects.get_or_create(npm=sso_response["attributes"]["npm"])
+
+    kd = cast(KDAttributes, kd)
     jurusan_name = "_".join(kd["study_program"].split()[:2])
     await user.update(
+        username=sso_response["username"].lower(),
         nama=sso_response["attributes"]["nama"],
         jurusan=jurusan_name.lower(),
     )
@@ -47,7 +49,14 @@ async def callback(ticket: str = Query(...)):
     response = HTMLResponse(
         content="""<script>window.opener.postMessage("logged", "*")</script>"""
     )
-    token = manager.create_access_token(data=dict(sub=dict(npm=user.npm)))
+    token = manager.create_access_token(
+        data=dict(
+            sub=dict(
+                npm=user.npm,
+                username=user.username,
+            )
+        )
+    )
     manager.set_cookie(response, token)
     return response
 

@@ -63,14 +63,16 @@ async def list(
 
 
 @router.get(
-    "/{npm}",
+    "/{username}",
     status_code=status.HTTP_200_OK,
     response_model=Student,
     response_model_exclude={"npm"},
     summary="Get Student Detail",
 )
-async def show(npm: int):
-    student = await Student.objects.select_related("house").get_or_none(npm=npm)
+async def show(username: str):
+    student = await Student.objects.select_related("house").get_or_none(
+        username=username
+    )
     if not student:
         raise HTTPException(status_code=404, detail="No such student found.")
     return student

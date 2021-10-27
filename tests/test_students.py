@@ -8,6 +8,15 @@ def test_list(client: TestClient):
     result = response.json()
     assert len(result) == 3
 
+    first_result = result[0]
+    assert first_result == {
+        "username": "nama",
+        "nama": "Sebuah Nama",
+        "jurusan": "ilmu_komputer",
+        "foto_diri": None,
+        "house_name": "Musical",
+    }
+
 
 def test_pagination(client: TestClient):
     ####################
@@ -88,7 +97,7 @@ def test_filters(client: TestClient):
 
 
 def test_student_detail(client: TestClient):
-    response = client.get("/student/210684283")
+    response = client.get("/student/test")
     assert response.status_code == 200
 
     result = response.json()

@@ -1,5 +1,6 @@
 [{
     "npm": 210684283,
+    "username": "test",
     "nama": "Test User",
     "jurusan": "ilmu_komputer",
     "ttl": "Jakarta, 12 Agustus 1969",
@@ -13,6 +14,7 @@
     "house": 1
 }, {
     "npm": 123,
+    "username": "nama",
     "nama": "Sebuah Nama",
     "jurusan": "ilmu_komputer",
     "ttl": "Jakarta, 19 Agustus 1969",
@@ -26,6 +28,7 @@
     "house": 2
 }, {
     "npm": 111,
+    "username": "zzznama",
     "nama": "ZzzzzNama",
     "jurusan": "sistem_informasi",
     "ttl": "Jakarta, 12 Agustus 2003",

@@ -7,6 +7,7 @@ class ErrorMessage(BaseModel):
 
 
 class StudentSummary(BaseModel):
+    username: str
     nama: str
     jurusan: t.Literal["ilmu_komputer", "sistem_informasi"]
     foto_diri: t.Optional[str]

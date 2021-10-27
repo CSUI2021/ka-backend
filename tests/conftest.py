@@ -4,8 +4,16 @@ import os
 import pytest
 from fastapi.testclient import TestClient
 
+import asyncio
 from ka_backend.app import app
 from ka_backend.models import SIG, Competition, House, Student
+
+
+@pytest.fixture(scope="module")
+def event_loop():
+    loop = asyncio.get_event_loop()
+    yield loop
+    loop.close()
 
 
 @pytest.fixture
@@ -13,7 +21,7 @@ def client():
     return TestClient(app)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True, scope="module")
 @pytest.mark.asyncio
 async def setup_db():
     import sqlalchemy

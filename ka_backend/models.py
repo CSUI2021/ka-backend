@@ -14,6 +14,7 @@ class Student(ormar.Model):
         tablename = "students"
 
     npm = ormar.Integer(primary_key=True)
+    username: str = ormar.String(max_length=128, nullable=True)
 
     # Data diri
     nama: str = ormar.String(max_length=100)
@@ -38,11 +39,13 @@ class Student(ormar.Model):
 
     async def get_summary(self):
         house_name = None
-        if self.house and not self.house.nama:
-            await self.house.load()
+        if self.house:
+            if not self.house.nama:
+                await self.house.load()
             house_name = self.house.nama
 
         return {
+            "username": self.username,
             "nama": self.nama,
             "jurusan": self.jurusan,
             "foto_diri": self.foto_diri,
