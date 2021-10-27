@@ -3,7 +3,7 @@ from typing import List, Literal, Optional
 from fastapi import APIRouter, HTTPException, Query, status
 
 from ka_backend.models import Student
-from ka_backend.responses import StudentSummary
+from ka_backend.responses import ErrorMessage, StudentSummary
 
 router = APIRouter(prefix="/student", tags=["Students"])
 
@@ -68,6 +68,10 @@ async def list(
     response_model=Student,
     response_model_exclude={"npm"},
     summary="Get Student Detail",
+    responses={
+        404: {"model": ErrorMessage, "description": "User is not found."},
+        200: {"description": "Requested user's info."},
+    },
 )
 async def show(username: str):
     student = await Student.objects.select_related("house").get_or_none(
