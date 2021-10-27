@@ -13,7 +13,16 @@ router = APIRouter(prefix="/competition", tags=["SIG"])
     summary="Get Competition List",
 )
 async def get_competition_list(
-    page_num: int = Query(1, ge=1), page_size: int = Query(10, ge=1)
+    page: int = Query(
+        1,
+        ge=1,
+        description="Page to look over",
+    ),
+    limit: int = Query(
+        10,
+        ge=1,
+        description="Number of results to return per page.",
+    ),
 ):
-    competition_list = await Competition.objects.paginate(page_num, page_size).all()
+    competition_list = await Competition.objects.paginate(page, limit).all()
     return competition_list

@@ -13,7 +13,16 @@ router = APIRouter(prefix="/sig", tags=["SIG"])
     summary="Get SIG List",
 )
 async def get_sig_list(
-    page_num: int = Query(1, ge=1), page_size: int = Query(10, ge=1)
+    page: int = Query(
+        1,
+        ge=1,
+        description="Page to look over",
+    ),
+    limit: int = Query(
+        10,
+        ge=1,
+        description="Number of results to return per page.",
+    ),
 ):
-    sig_list = await SIG.objects.paginate(page_num, page_size).all()
+    sig_list = await SIG.objects.paginate(page, limit).all()
     return sig_list
