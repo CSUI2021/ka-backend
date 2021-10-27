@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException, Query, status
 
 from ka_backend.models import Student
 
-router = APIRouter(prefix="/student")
+router = APIRouter(prefix="/student", tags=["Students"])
 
 
 @router.get(
@@ -12,6 +12,7 @@ router = APIRouter(prefix="/student")
     status_code=status.HTTP_200_OK,
     response_model=List[Student],
     response_model_include={"nama", "house", "jurusan", "foto_diri"},
+    summary="Get Student List",
 )
 async def list(
     name: Optional[str] = None,
@@ -20,7 +21,6 @@ async def list(
     sort: Optional[Literal["asc", "desc"]] = "asc",
     page: int = Query(1, ge=1),
 ):
-
     students = Student.objects.select_related("house")
     if name:
         students = students.filter(nama__icontains=name)
@@ -43,6 +43,7 @@ async def list(
     status_code=status.HTTP_200_OK,
     response_model=Student,
     response_model_exclude={"npm"},
+    summary="Get Student Detail",
 )
 async def show(npm: int):
     student = await Student.objects.select_related("house").get_or_none(npm=npm)

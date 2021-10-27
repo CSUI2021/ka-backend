@@ -10,7 +10,7 @@ from ka_backend.plugins import manager
 from ka_backend.sso.client import AuthError, UIClient
 from ka_backend.sso.types import KDAttributes
 
-router = APIRouter(prefix="/auth")
+router = APIRouter(prefix="/auth", tags=["Users"])
 client = UIClient(f"http://{settings.hostname}/auth/callback")
 
 
