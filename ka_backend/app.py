@@ -1,5 +1,6 @@
 from fastapi import Depends, FastAPI
 
+from ka_backend import __version__, __description__
 from ka_backend.helper.database import database
 from ka_backend.models import Student
 from ka_backend.plugins import manager
@@ -18,7 +19,12 @@ tags_metadata = [
     {"name": "Students", "description": "Students related operations."},
 ]
 
-app = FastAPI(openapi_tags=tags_metadata)
+app = FastAPI(
+    openapi_tags=tags_metadata,
+    title="Karya Angkatan",
+    version=__version__,
+    description=__description__,
+)
 app.include_router(AuthRouter)
 app.include_router(SigRouter)
 app.include_router(CompetitionRouter)
