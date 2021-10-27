@@ -15,12 +15,32 @@ router = APIRouter(prefix="/student", tags=["Students"])
     summary="Get Student List",
 )
 async def list(
-    name: Optional[str] = None,
-    major: Optional[Literal["ilmu_komputer", "sistem_informasi"]] = None,
-    house: Optional[str] = None,
-    sort: Optional[Literal["asc", "desc"]] = "asc",
-    page: int = Query(1, ge=1),
-    limit: int = Query(20, ge=1),
+    name: Optional[str] = Query(
+        None,
+        description="Name of student to search.",
+    ),
+    major: Optional[Literal["ilmu_komputer", "sistem_informasi"]] = Query(
+        None,
+        description="Filters by major name.",
+    ),
+    house: Optional[str] = Query(
+        None,
+        description="Filters by major name.",
+    ),
+    sort: Optional[Literal["asc", "desc"]] = Query(
+        "asc",
+        description="Name sorting order.",
+    ),
+    page: int = Query(
+        1,
+        ge=1,
+        description="Page to look over",
+    ),
+    limit: int = Query(
+        20,
+        ge=1,
+        description="Number of results to return per page.",
+    ),
 ):
     students = Student.objects.select_related("house")
     if name:
