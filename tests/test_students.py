@@ -61,7 +61,7 @@ def test_filters(client: TestClient):
 
     result = response.json()
     assert len(result) == 2
-    assert result[0]["house"]["nama"] == "Space"
+    assert result[0]["house_name"] == "Space"
 
     ####################
     # Nonexistent house

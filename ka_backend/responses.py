@@ -9,5 +9,5 @@ class ErrorMessage(BaseModel):
 class StudentSummary(BaseModel):
     nama: str
     jurusan: t.Literal["ilmu_komputer", "sistem_informasi"]
-    foto_diri: str
-    house_name: str
+    foto_diri: t.Optional[str]
+    house_name: t.Optional[str]

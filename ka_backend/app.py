@@ -44,7 +44,7 @@ async def me(user: Student = Depends(manager)):
     """Gets currently authenticated user's data.
 
     If there is no authenticated user or session has expired, it will return a 401 response."""
-    return user
+    return await user.get_summary()
 
 
 @app.on_event("startup")

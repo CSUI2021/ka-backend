@@ -3,6 +3,7 @@ from typing import List, Literal, Optional
 from fastapi import APIRouter, HTTPException, Query, status
 
 from ka_backend.models import Student
+from ka_backend.responses import StudentSummary
 
 router = APIRouter(prefix="/student", tags=["Students"])
 
@@ -10,8 +11,7 @@ router = APIRouter(prefix="/student", tags=["Students"])
 @router.get(
     "/list",
     status_code=status.HTTP_200_OK,
-    response_model=List[Student],
-    response_model_include={"nama", "house", "jurusan", "foto_diri"},
+    response_model=List[StudentSummary],
     summary="Get Student List",
 )
 async def list(
@@ -20,6 +20,7 @@ async def list(
     house: Optional[str] = None,
     sort: Optional[Literal["asc", "desc"]] = "asc",
     page: int = Query(1, ge=1),
+    limit: int = Query(20, ge=1),
 ):
     students = Student.objects.select_related("house")
     if name:
@@ -34,7 +35,10 @@ async def list(
     elif sort == "desc":
         students = students.order_by("-nama")
 
-    result = await students.paginate(page=page, page_size=10).all()
+    result = [
+        await user.get_summary()
+        for user in await students.paginate(page=page, page_size=limit).all()
+    ]
     return result
 
 

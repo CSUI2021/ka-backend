@@ -36,6 +36,19 @@ class Student(ormar.Model):
     house = ormar.ForeignKey(HouseRef, related_name="members")
     house_led = ormar.ForeignKey(HouseRef, related_name="ketua")
 
+    async def get_summary(self):
+        house_name = None
+        if self.house and not self.house.nama:
+            await self.house.load()
+            house_name = self.house.nama
+
+        return {
+            "nama": self.nama,
+            "jurusan": self.jurusan,
+            "foto_diri": self.foto_diri,
+            "house_name": house_name,
+        }
+
 
 class House(ormar.Model):
     class Meta(BaseMeta):
