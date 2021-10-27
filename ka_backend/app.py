@@ -3,11 +3,11 @@ from fastapi import Depends, FastAPI
 from ka_backend.helper.database import database
 from ka_backend.models import Student
 from ka_backend.plugins import manager
+from ka_backend.responses import ErrorMessage, StudentSummary
 from ka_backend.routes.auth import router as AuthRouter
 from ka_backend.routes.competition import router as CompetitionRouter
 from ka_backend.routes.sig import router as SigRouter
 from ka_backend.routes.student import router as StudentRouter
-from ka_backend.responses import ErrorMessage, StudentSummary
 
 tags_metadata = [
     {

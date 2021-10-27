@@ -1,10 +1,10 @@
+import asyncio
 import json
 import os
 
 import pytest
 from fastapi.testclient import TestClient
 
-import asyncio
 from ka_backend.app import app
 from ka_backend.models import SIG, Competition, House, Student
 
