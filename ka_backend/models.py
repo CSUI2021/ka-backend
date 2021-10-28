@@ -30,12 +30,15 @@ class Student(ormar.Model):
     twitter: str = ormar.String(max_length=16, nullable=True)
     line: str = ormar.String(max_length=50, nullable=True)
     instagram: str = ormar.String(max_length=32, nullable=True)
-    karya: List[str] = ormar.JSON(nullable=True)  # type: ignore
+    karya: List[str] = ormar.JSON(nullable=True, default=[])  # type: ignore
 
     foto_diri: str = ormar.Text(nullable=True)
     video_diri: str = ormar.Text(nullable=True)
     house = ormar.ForeignKey(HouseRef, related_name="members")
     house_led = ormar.ForeignKey(HouseRef, related_name="ketua")
+
+    message: str = ormar.Text(nullable=True)
+    interests: List[str] = ormar.JSON(nullable=True, default=[])  # type: ignore
 
     async def get_summary(self):
         house_name = None

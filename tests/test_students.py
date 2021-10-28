@@ -112,6 +112,8 @@ def test_student_detail(client: TestClient):
     assert not result["foto_diri"]
     assert result["video_diri"] == "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     assert result["house"]["id"] == 1
+    assert result["interests"] == ["Python"]
+    assert result["message"] == "lulus cum laude amin"
 
     # 404 Response
     response = client.get("/student/1")

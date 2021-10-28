@@ -11,7 +11,9 @@
     "karya": null,
     "foto_diri": null,
     "video_diri": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    "house": 1
+    "house": 1,
+    "interests": ["Python"],
+    "message": "lulus cum laude amin"
 }, {
     "npm": 123,
     "username": "nama",
@@ -25,7 +27,9 @@
     "karya": null,
     "foto_diri": null,
     "video_diri": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    "house": 2
+    "house": 2,
+    "interests": [],
+    "message": "lulus cum laude amin"
 }, {
     "npm": 111,
     "username": "zzznama",
@@ -39,5 +43,7 @@
     "karya": null,
     "foto_diri": null,
     "video_diri": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    "house": 1
+    "house": 1,
+    "interests": [],
+    "message": "lulus cum laude amin"
 }]
