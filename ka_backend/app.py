@@ -1,6 +1,6 @@
 from fastapi import Depends, FastAPI
 
-from ka_backend import __version__, __description__
+from ka_backend import __description__, __version__
 from ka_backend.helper.database import database
 from ka_backend.models import Student
 from ka_backend.plugins import manager
