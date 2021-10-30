@@ -23,7 +23,7 @@ async def list(
         None,
         description="Filters by major name.",
     ),
-    house: Optional[str] = Query(
+    house: Optional[List[str]] = Query(
         None,
         description="Filters by major name.",
     ),
@@ -48,7 +48,7 @@ async def list(
     if major:
         students = students.filter(jurusan__exact=major)
     if house:
-        students = students.filter(house__nama__exact=house)
+        students = students.filter(house__nama__in=house)
 
     if sort == "asc":
         students = students.order_by("nama")

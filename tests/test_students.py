@@ -73,6 +73,14 @@ def test_filters(client: TestClient):
     assert result[0]["house_name"] == "Space"
 
     ####################
+    # Multiple house filter
+    response = client.get("/student/list?house=Space&house=Musical")
+    assert response.status_code == 200
+
+    result = response.json()
+    assert len(result) == 3
+
+    ####################
     # Nonexistent house
     response = client.get("/student/list?house=nonexistent")
     assert response.status_code == 200
