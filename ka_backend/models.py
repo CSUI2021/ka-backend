@@ -17,7 +17,7 @@ class Student(ormar.Model):
     username: str = ormar.String(max_length=128, nullable=True)
 
     # Data diri
-    nama: str = ormar.String(max_length=100)
+    nama: str = ormar.String(max_length=100, nullable=True)
     jurusan: str = ormar.String(
         max_length=32,
         choices=["ilmu_komputer", "sistem_informasi"],
