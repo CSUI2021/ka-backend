@@ -8,8 +8,8 @@ from ka_backend.responses import ErrorMessage, StudentSummary
 from ka_backend.routes.auth import router as AuthRouter
 from ka_backend.routes.competition import router as CompetitionRouter
 from ka_backend.routes.sig import router as SigRouter
-from ka_backend.routes.student import router as StudentRouter
 from ka_backend.routes.story import router as StoryRouter
+from ka_backend.routes.student import router as StudentRouter
 
 tags_metadata = [
     {
