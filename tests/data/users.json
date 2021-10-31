@@ -12,7 +12,8 @@
     "video_diri": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     "house": 1,
     "interests": ["Python"],
-    "message": "lulus cum laude amin"
+    "message": "lulus cum laude amin",
+    "about": "Aku keren"
 }, {
     "npm": 123,
     "username": "nama",
@@ -27,7 +28,8 @@
     "video_diri": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     "house": 2,
     "interests": [],
-    "message": "lulus cum laude amin"
+    "message": "lulus cum laude amin",
+    "about": "Aku keren"
 }, {
     "npm": 111,
     "username": "zzznama",
@@ -42,5 +44,6 @@
     "video_diri": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     "house": 1,
     "interests": [],
-    "message": "lulus cum laude amin"
+    "message": "lulus cum laude amin",
+    "about": "Aku keren"
 }]

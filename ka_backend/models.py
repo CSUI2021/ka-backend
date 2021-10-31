@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 import ormar
 from pydantic.typing import ForwardRef
@@ -27,17 +27,18 @@ class Student(ormar.Model):
     hobi: str = ormar.String(max_length=50, nullable=True)
 
     # Social media
-    twitter: str = ormar.String(max_length=16, nullable=True)
-    line: str = ormar.String(max_length=50, nullable=True)
-    instagram: str = ormar.String(max_length=32, nullable=True)
+    twitter: Optional[str] = ormar.String(max_length=16, nullable=True)
+    line: Optional[str] = ormar.String(max_length=50, nullable=True)
+    instagram: Optional[str] = ormar.String(max_length=32, nullable=True)
 
-    foto_diri: str = ormar.Text(nullable=True)
-    video_diri: str = ormar.Text(nullable=True)
+    foto_diri: Optional[str] = ormar.Text(nullable=True)
+    video_diri: Optional[str] = ormar.Text(nullable=True)
     house = ormar.ForeignKey(HouseRef, related_name="members")
     house_led = ormar.ForeignKey(HouseRef, related_name="ketua")
 
     message: str = ormar.Text(nullable=True)
-    interests: List[str] = ormar.JSON(nullable=True, default=[])  # type: ignore
+    about: str = ormar.Text(nullable=True)
+    interests: List[str] = ormar.JSON(server_default="[]")  # type: ignore
 
     async def get_summary(self):
         house_name = None
@@ -70,7 +71,7 @@ class SIG(ormar.Model):
     id: int = ormar.Integer(primary_key=True)
     nama: str = ormar.String(max_length=160)
     detail: str = ormar.Text()
-    foto: str = ormar.Text(nullable=True)
+    foto: Optional[str] = ormar.Text(nullable=True)
     is_it_interest = ormar.Boolean(default=True)
 
 
@@ -80,7 +81,7 @@ class Competition(ormar.Model):
 
     id: int = ormar.Integer(primary_key=True)
     nama: str = ormar.String(max_length=160)
-    foto: str = ormar.Text(nullable=True)
+    foto: Optional[str] = ormar.Text(nullable=True)
     link: str = ormar.Text()
 
 
@@ -91,7 +92,7 @@ class Story(ormar.Model):
     id: int = ormar.Integer(primary_key=True)
     title: str = ormar.String(max_length=128)
     detail: str = ormar.Text()
-    foto: List[str] = ormar.JSON(nullable=True, default=[])  # type: ignore
+    foto: List[str] = ormar.JSON(server_default="[]")  # type: ignore
 
 
 Student.update_forward_refs()
