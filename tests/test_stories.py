@@ -14,7 +14,7 @@ def test_listing(client: TestClient):
 
     assert result[1]["title"] == "Test Story 2"
     assert result[1]["detail"] == "Electric Boogaloo"
-    assert result[1]["foto"] == ["https://google.com"]
+    assert not result[1]["foto"]
 
 
 def test_pagination(client: TestClient):
@@ -36,7 +36,7 @@ def test_pagination(client: TestClient):
 
     ####################
     # Page content limit + number
-    response = client.get("/competition/list?page=2&limit=1")
+    response = client.get("/story/list?page=2&limit=1")
     assert response.status_code == 200
 
     result = response.json()
