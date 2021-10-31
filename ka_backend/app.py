@@ -9,6 +9,7 @@ from ka_backend.routes.auth import router as AuthRouter
 from ka_backend.routes.competition import router as CompetitionRouter
 from ka_backend.routes.sig import router as SigRouter
 from ka_backend.routes.student import router as StudentRouter
+from ka_backend.routes.story import router as StoryRouter
 
 tags_metadata = [
     {
@@ -17,6 +18,7 @@ tags_metadata = [
     },
     {"name": "SIG", "description": "SIG related operations."},
     {"name": "Students", "description": "Students related operations."},
+    {"name": "Story", "description": "Stories related operations."},
 ]
 
 app = FastAPI(
@@ -29,6 +31,7 @@ app.include_router(AuthRouter)
 app.include_router(SigRouter)
 app.include_router(CompetitionRouter)
 app.include_router(StudentRouter)
+app.include_router(StoryRouter)
 
 
 @app.get("/", include_in_schema=False)

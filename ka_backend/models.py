@@ -85,4 +85,14 @@ class Competition(ormar.Model):
     link: str = ormar.Text()
 
 
+class Story(ormar.Model):
+    class Meta(BaseMeta):
+        tablename = "stories"
+
+    id: int = ormar.Integer(primary_key=True)
+    title: str = ormar.String(max_length=128)
+    detail: str = ormar.Text()
+    foto: List[str] = ormar.JSON(nullable=True, default=[])  # type: ignore
+
+
 Student.update_forward_refs()
