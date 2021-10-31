@@ -14,7 +14,7 @@ def test_listing(client: TestClient):
 
     assert result[1]["title"] == "Test Story 2"
     assert result[1]["detail"] == "Electric Boogaloo"
-    assert not result[1]["foto"]
+    assert result[1]["foto"] == []
 
 
 def test_pagination(client: TestClient):
@@ -43,4 +43,4 @@ def test_pagination(client: TestClient):
     assert len(result) == 1
     assert result[0]["title"] == "Test Story 2"
     assert result[0]["detail"] == "Electric Boogaloo"
-    assert not result[0]["foto"]
+    assert result[0]["foto"] == []

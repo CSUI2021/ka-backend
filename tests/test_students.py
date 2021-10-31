@@ -116,7 +116,6 @@ def test_student_detail(client: TestClient):
     assert not result["twitter"]
     assert not result["line"]
     assert not result["instagram"]
-    assert not result["karya"]
     assert not result["foto_diri"]
     assert result["video_diri"] == "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     assert result["house"]["id"] == 1
@@ -127,3 +126,10 @@ def test_student_detail(client: TestClient):
     response = client.get("/student/1")
     assert response.status_code == 404
     assert response.json() == {"detail": "No such student found."}
+
+    # Empty interests
+    response = client.get("/student/nama")
+    assert response.status_code == 200
+
+    result = response.json()
+    assert result["interests"] == []
