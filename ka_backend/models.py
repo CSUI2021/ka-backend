@@ -30,7 +30,6 @@ class Student(ormar.Model):
     twitter: str = ormar.String(max_length=16, nullable=True)
     line: str = ormar.String(max_length=50, nullable=True)
     instagram: str = ormar.String(max_length=32, nullable=True)
-    karya: List[str] = ormar.JSON(nullable=True, default=[])  # type: ignore
 
     foto_diri: str = ormar.Text(nullable=True)
     video_diri: str = ormar.Text(nullable=True)
