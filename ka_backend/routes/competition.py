@@ -3,13 +3,14 @@ from typing import List
 from fastapi import APIRouter, Query
 
 from ka_backend.models import Competition
+from ka_backend.responses import Competition as CompetitionResponse
 
 router = APIRouter(prefix="/competition", tags=["SIG"])
 
 
 @router.get(
     "/list",
-    response_model=List[Competition],
+    response_model=List[CompetitionResponse],
     summary="Get Competition List",
 )
 async def get_competition_list(

@@ -3,13 +3,14 @@ from typing import List
 from fastapi import APIRouter, Query
 
 from ka_backend.models import SIG
+from ka_backend.responses import SIG as SIGResponse
 
 router = APIRouter(prefix="/sig", tags=["SIG"])
 
 
 @router.get(
     "/list",
-    response_model=List[SIG],
+    response_model=List[SIGResponse],
     summary="Get SIG List",
 )
 async def get_sig_list(

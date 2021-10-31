@@ -3,13 +3,14 @@ from typing import List
 from fastapi import APIRouter, Query
 
 from ka_backend.models import Story
+from ka_backend.responses import Story as StoryResponse
 
 router = APIRouter(prefix="/story", tags=["Story"])
 
 
 @router.get(
     "/list",
-    response_model=List[Story],
+    response_model=List[StoryResponse],
     summary="Get Our Stories List",
 )
 async def get_story_list(
