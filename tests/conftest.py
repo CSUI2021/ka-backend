@@ -6,7 +6,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from ka_backend.app import app
-from ka_backend.models import SIG, Competition, House, Student
+from ka_backend.models import SIG, Competition, House, Story, Student
 
 
 @pytest.fixture(scope="module")
@@ -57,6 +57,10 @@ async def setup_db():
         await Competition.objects.bulk_create(
             [Competition(**data) for data in json.load(f)]
         )
+
+    with open("tests/data/stories.json", "r") as f:
+        await Story.objects.bulk_create([Story(**data) for data in json.load(f)])
+
     yield
     metadata.drop_all(engine)
     os.remove("test.db")

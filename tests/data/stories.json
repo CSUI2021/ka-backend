@@ -1,0 +1,9 @@
+[{
+    "title":"Test Story",
+    "detail": "Yes",
+    "foto": ["https://google.com"]
+}, {
+    "nama":"Test Story 2",
+    "detail": "Electric Boogaloo",
+    "foto": null
+}]
