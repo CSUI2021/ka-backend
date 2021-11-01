@@ -16,6 +16,11 @@ mysqlclient = { version = "^2.0.3", extras = ["mysql"] }
 aiomysql = { version = "^0.0.21", extras = ["mysql"] }
 psycopg2 = {version = "^2.9.1", extras = ["pgsql"]}
 asyncpg = {version = "^0.24.0", extras = ["pgsql"]}
+uvicorn = "^0.15.0"
+python-dotenv = "^0.19.1"
+Jinja2 = "^3.0.2"
+python-multipart = "^0.0.5"
+itsdangerous = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -1,10 +1,13 @@
 from fastapi import Depends, FastAPI
+from starlette.middleware.sessions import SessionMiddleware
 
 from ka_backend import __description__, __version__
 from ka_backend.helper.database import database
+from ka_backend.helper.settings import settings
 from ka_backend.models import Student
 from ka_backend.plugins import manager
 from ka_backend.responses import ErrorMessage, StudentSummary
+from ka_backend.routes.admin import router as AdminRouter
 from ka_backend.routes.auth import router as AuthRouter
 from ka_backend.routes.competition import router as CompetitionRouter
 from ka_backend.routes.sig import router as SigRouter
@@ -27,11 +30,14 @@ app = FastAPI(
     version=__version__,
     description=__description__,
 )
+app.include_router(AdminRouter)
 app.include_router(AuthRouter)
 app.include_router(SigRouter)
 app.include_router(CompetitionRouter)
 app.include_router(StudentRouter)
 app.include_router(StoryRouter)
+
+app.add_middleware(SessionMiddleware, secret_key=settings.secret, https_only=True)
 
 
 @app.get("/", include_in_schema=False)

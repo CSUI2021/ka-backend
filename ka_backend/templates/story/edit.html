@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="pt-5 pb-3">
+    {% if story %}
+    <h2>Editing: {{story.title}}</h2>
+    {% else %}
+    <h2>New Story</h2>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="title" class="form-label">Story Title</label>
+        <input class="form-control" id="title" name="title" maxlength="128" value="{{ story.title | default('') }}" />
+    </div>
+
+    <div class="mb-3">
+        <label for="detail" class="form-label">Detail</label>
+        <textarea class="form-control" id="detail" name="detail">{{story.detail | default('') }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="foto" class="form-label">Photos</label>
+        <input class="form-control" type="file" id="foto" name="foto" multiple accept="image/jpeg, image/png" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
