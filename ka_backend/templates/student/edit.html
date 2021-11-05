@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="pt-5 pb-3">
+    {% if student %}
+    <h2>Editing: {{student.title}}</h2>
+    {% else %}
+    <h2>New Student</h2>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="npm" class="form-label">NPM</label>
+        <input
+            class="form-control"
+            type="number"
+            id="npm"
+            name="npm"
+            value="{{ student.npm | default('') }}"
+        >
+    </div>
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+            class="form-control"
+            type="text"
+            id="username"
+            name="username"
+            value="{{ student.username | default('') }}"
+            maxlength="128"
+        >
+    </div>
+    <div class="mb-3">
+        <label for="nama" class="form-label">Nama</label>
+        <input
+            class="form-control"
+            type="text"
+            id="nama"
+            name="nama"
+            value="{{ student.nama | default('') }}"
+            maxlength="100"
+        >
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Jurusan</label>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="jurusan"
+                id="ilmu_komputer"
+                value="ilmu_komputer"
+            >
+            <label class="form-check-label" for="ilmu_komputer">
+                Ilmu Komputer
+            </label>
+        </div>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="jurusan"
+                id="sistem_informasi"
+                value="sistem_informasi"
+            >
+            <label class="form-check-label" for="sistem_informasi">
+                Sistem Informasi
+            </label>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="ttl" class="form-label">TTL</label>
+        <input
+            class="form-control"
+            type="date"
+            id="ttl"
+            name="ttl"
+            value="{{ student.ttl | default('') }}"
+        >
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
