@@ -20,7 +20,7 @@
             type="number"
             id="npm"
             name="npm"
-            value="{{ student.npm | default('') }}"
+            value="{{ student.npm | default('', True) }}"
             {% if student %}
             readonly
             {% endif %}
@@ -33,7 +33,7 @@
             type="text"
             id="username"
             name="username"
-            value="{{ student.username | default('') }}"
+            value="{{ student.username | default('', True) }}"
             maxlength="128"
             {% if student %}
             readonly
@@ -48,7 +48,7 @@
             type="text"
             id="nama"
             name="nama"
-            value="{{ student.nama | default('') }}"
+            value="{{ student.nama | default('', True) }}"
             maxlength="100"
         >
     </div>
@@ -139,12 +139,12 @@
             type="date"
             id="ttl"
             name="ttl"
-            value="{{ student.ttl | default('') }}"
+            value="{{ student.ttl | default('', True) }}"
         >
     </div>
     <div class="mb-3">
         <label for="hobi" class="form-label">Hobi</label>
-        <textarea name="hobi" id="hobi" class="form-control">{{student.hobi | default('') }}</textarea>
+        <textarea name="hobi" id="hobi" class="form-control">{{student.hobi | default('', True) }}</textarea>
     </div>
     <div class="mb-3">
         <label class="form-label">IT Interest</label>
@@ -315,7 +315,7 @@
             class="form-control"
             id="twitter"
             name="twitter"
-            value="{{ student.twitter | default('') }}"
+            value="{{ student.twitter | default('', True) }}"
         >
     </div>
     <div class="mb-3">
@@ -325,7 +325,7 @@
             class="form-control"
             id="line"
             name="line"
-            value="{{ student.line | default('') }}"
+            value="{{ student.line | default('', True) }}"
         >
     </div>
     <div class="mb-3">
@@ -335,7 +335,7 @@
             class="form-control"
             id="instagram"
             name="instagram"
-            value="{{ student.instagram | default('') }}"
+            value="{{ student.instagram | default('', True) }}"
         >
     </div>
     <h4>Perkenalan diri</h4>
@@ -356,7 +356,7 @@
             type="url"
             id="video_diri"
             name="video_diri"
-            value="{{ student.video_diri | default('') }}"
+            value="{{ student.video_diri | default('', True) }}"
         >
     </div>
     <div class="mb-3">
@@ -366,7 +366,7 @@
             id="message"
             class="form-control"
             maxlength="400"
-        >{{student.message | default('') }}</textarea>
+        >{{student.message | default('', True) }}</textarea>
     </div>
     <div class="mb-3">
         <label for="about" class="form-label">About Me</label>
@@ -375,7 +375,7 @@
             id="about"
             class="form-control"
             maxlength="600"
-        >{{student.about | default('') }}</textarea>
+        >{{student.about | default('', True) }}</textarea>
     </div>
     <button type="submit" class="btn btn-primary mb-3">Submit</button>
 </form>
