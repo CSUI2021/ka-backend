@@ -1,7 +1,6 @@
 from math import ceil
-from typing import List, Optional
+from typing import List
 
-from black import traceback
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
 
