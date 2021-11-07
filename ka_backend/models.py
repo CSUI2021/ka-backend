@@ -51,6 +51,7 @@ class Student(ormar.Model):
         return {
             "username": self.username,
             "nama": self.nama,
+            "is_2021": self.npm >= 2100000000,
             "jurusan": self.jurusan,
             "foto_diri": self.foto_diri,
             "house_name": house_name,
