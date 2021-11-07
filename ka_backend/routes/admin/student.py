@@ -4,7 +4,7 @@ from typing import List, Optional
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
 
-from ka_backend.models import Student, House
+from ka_backend.models import House, Student
 from ka_backend.plugins import templates
 
 router = APIRouter(prefix="/student")
