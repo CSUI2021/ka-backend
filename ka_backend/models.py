@@ -38,7 +38,7 @@ class Student(ormar.Model):
 
     message: str = ormar.Text(nullable=True)
     about: str = ormar.Text(nullable=True)
-    interests: List[str] = ormar.JSON(server_default="[]")  # type: ignore
+    interests: List[str] = ormar.JSON(default="[]")  # type: ignore
 
     async def get_summary(self):
         house_name = None
@@ -92,7 +92,7 @@ class Story(ormar.Model):
     id: int = ormar.Integer(primary_key=True)
     title: str = ormar.String(max_length=128)
     detail: str = ormar.Text()
-    foto: List[str] = ormar.JSON(server_default="[]")  # type: ignore
+    foto: List[str] = ormar.JSON(default="[]")  # type: ignore
 
 
 Student.update_forward_refs()
