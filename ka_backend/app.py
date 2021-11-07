@@ -1,4 +1,7 @@
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Request
+from fastapi.exception_handlers import request_validation_exception_handler
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
 
 from ka_backend import __description__, __version__
@@ -72,3 +75,18 @@ async def on_startup():
 async def on_shutdown():
     if database.is_connected:
         await database.disconnect()
+
+
+@app.exception_handler(RequestValidationError)
+async def on_validation_error(request: Request, exc: RequestValidationError):
+    if not request.url.path.startswith("/admin"):
+        return await request_validation_exception_handler(request, exc)
+
+    errors = exc.errors()
+
+    err_str = ""
+    for err in errors:
+        err_str += f"<li>{err['loc'][1]}: {err['msg']}</li>"
+    error_html = f"<b>An error has occured.</b><ul>{err_str}</ul>"
+    request.session["alert"] = ("danger", error_html)
+    return RedirectResponse(url=request.url.path, status_code=302)
