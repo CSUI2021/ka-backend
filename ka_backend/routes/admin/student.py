@@ -1,5 +1,5 @@
 from math import ceil
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -67,48 +67,38 @@ async def do_new_student(
     message: str = Form(...),
     about: str = Form(...),
 ):
+    # TODO: Foto diri
     try:
-        house = await House.objects.get(nama=house)
+        house_object = await House.objects.get(nama=house)
+
+        house_led: Optional[House]
         if ketua_house == "ya":
-            await Student.objects.create(
-                npm=npm,
-                username=username,
-                nama=nama,
-                jurusan=jurusan,
-                house=house,
-                house_led=house,
-                ttl=ttl,
-                hobi=hobi,
-                interests=interests,
-                twitter=twitter,
-                line=line,
-                instagram=instagram,
-                video_diri=video_diri,
-                message=message,
-                about=about,
-            )
+            house_led = house_object
         else:
-            await Student.objects.create(
-                npm=npm,
-                username=username,
-                nama=nama,
-                jurusan=jurusan,
-                house=house,
-                ttl=ttl,
-                hobi=hobi,
-                interests=interests,
-                twitter=twitter,
-                line=line,
-                instagram=instagram,
-                video_diri=video_diri,
-                message=message,
-                about=about,
-            )
+            house_led = None
+
+        await Student.objects.create(
+            npm=npm,
+            username=username,
+            nama=nama,
+            jurusan=jurusan,
+            house=house_object,
+            house_led=house_led,
+            ttl=ttl,
+            hobi=hobi,
+            interests=interests,
+            twitter=twitter,
+            line=line,
+            instagram=instagram,
+            video_diri=video_diri,
+            message=message,
+            about=about,
+        )
         request.session["alert"] = ("success", "Student created.")
     except:
         request.session["alert"] = (
             "danger",
-            "An error an occured or data is not valid.",
+            "An error has occured or data is not valid.",
         )
     return RedirectResponse(url=request.url_for("student_index"), status_code=302)
 
@@ -146,44 +136,35 @@ async def do_edit_student(
     message: str = Form(...),
     about: str = Form(...),
 ):
+    # TODO: Foto diri
     student = await Student.objects.select_related("house").get_or_none(npm=npm)
     if not student:
         raise HTTPException(404, detail="student not found.")
 
     try:
-        house = await House.objects.get(nama=house)
+        house_object = await House.objects.get(nama=house)
+
+        house_led: Optional[House]
         if ketua_house == "ya":
-            await student.update(
-                nama=nama,
-                jurusan=jurusan,
-                house=house,
-                house_led=house,
-                ttl=ttl,
-                hobi=hobi,
-                interests=interests,
-                twitter=twitter,
-                line=line,
-                instagram=instagram,
-                video_diri=video_diri,
-                message=message,
-                about=about,
-            )
+            house_led = house_object
         else:
-            await student.update(
-                nama=nama,
-                jurusan=jurusan,
-                house=house,
-                house_led=None,
-                ttl=ttl,
-                hobi=hobi,
-                interests=interests,
-                twitter=twitter,
-                line=line,
-                instagram=instagram,
-                video_diri=video_diri,
-                message=message,
-                about=about,
-            )
+            house_led = None
+
+        await student.update(
+            nama=nama,
+            jurusan=jurusan,
+            house=house_object,
+            house_led=house_led,
+            ttl=ttl,
+            hobi=hobi,
+            interests=interests,
+            twitter=twitter,
+            line=line,
+            instagram=instagram,
+            video_diri=video_diri,
+            message=message,
+            about=about,
+        )
         request.session["alert"] = ("success", "Student edited.")
     except:
         request.session["alert"] = (
