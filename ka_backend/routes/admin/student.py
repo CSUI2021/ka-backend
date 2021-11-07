@@ -137,7 +137,7 @@ async def do_edit_student(
     about: str = Form(...),
 ):
     # TODO: Foto diri
-    student = await Student.objects.select_related("house").get_or_none(npm=npm)
+    student = await Student.objects.select_all().get_or_none(npm=npm)
     if not student:
         raise HTTPException(404, detail="student not found.")
 
@@ -149,6 +149,12 @@ async def do_edit_student(
             house_led = house_object
         else:
             house_led = None
+
+            if student.house_led:
+                # Explicitly reload house_led as we dont want to have
+                # reference of it on student while working on it.
+                ex_house_led = await student.house_led.load()
+                await ex_house_led.ketua.remove(student)
 
         await student.update(
             nama=nama,
