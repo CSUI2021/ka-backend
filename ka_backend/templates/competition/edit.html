@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="pt-5 pb-3">
+    {% if competition %}
+    <h2>Editing: {{competition.nama}}</h2>
+    {% else %}
+    <h2>New Competition</h2>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="nama" class="form-label">Nama</label>
+        <input
+            class="form-control"
+            id="nama"
+            name="nama"
+            maxlength="128"
+            value="{{ competition.nama | default('') }}"
+        />
+    </div>
+
+
+    <div class="mb-3">
+        <label for="foto" class="form-label">Foto</label>
+        <input
+            class="form-control"
+            type="file"
+            id="foto"
+            name="foto"
+            accept="image/jpeg, image/png"
+        />
+    </div>
+
+    <div class="mb-3">
+        <label for="link" class="form-label">Link</label>
+        <input
+            class="form-control"
+            type="url"
+            id="link"
+            name="link"
+            accept="image/jpeg, image/png"
+            value="{{ competition.link | default('', True) }}"
+        />
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
