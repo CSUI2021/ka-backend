@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="pt-5 pb-3">
+    {% if student %}
+    <h2>Editing: {{student.nama}}</h2>
+    {% else %}
+    <h2>New Student</h2>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    <h4>Akun SSO</h4>
+    <div class="mb-3">
+        <label for="npm" class="form-label">NPM</label>
+        <input
+            class="form-control"
+            type="number"
+            id="npm"
+            name="npm"
+            value="{{ student.npm | default('', True) }}"
+            {% if student %}
+            readonly
+            {% endif %}
+        >
+    </div>
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+            class="form-control"
+            type="text"
+            id="username"
+            name="username"
+            value="{{ student.username | default('', True) }}"
+            maxlength="128"
+            {% if student %}
+            readonly
+            {% endif %}
+        >
+    </div>
+    <h4>Data Diri</h4>
+    <div class="mb-3">
+        <label for="nama" class="form-label">Nama</label>
+        <input
+            class="form-control"
+            type="text"
+            id="nama"
+            name="nama"
+            value="{{ student.nama | default('', True) }}"
+            maxlength="100"
+        >
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Jurusan</label>
+        <br>
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input
+                type="radio"
+                class="btn-check"
+                id="ilmu_komputer"
+                autocomplete="off"
+                name="jurusan"
+                value="ilmu_komputer"
+                {% if student and student.jurusan == "ilmu_komputer" %}
+                checked
+                {% endif %}
+            >
+            <label class="btn btn-outline-dark" for="ilmu_komputer">Ilmu Komputer</label>
+            <input
+                type="radio"
+                class="btn-check"
+                id="sistem_informasi"
+                autocomplete="off"
+                name="jurusan"
+                value="sistem_informasi"
+                {% if student and student.jurusan == "sistem_informasi" %}
+                checked
+                {% endif %}
+            >
+            <label class="btn btn-outline-dark" for="sistem_informasi">Sistem Informasi</label>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">House</label>
+        <br>
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            {% for house in houses %}
+            <input
+                type="radio"
+                class="btn-check"
+                id="{{ house.nama }}"
+                autocomplete="off"
+                name="house"
+                value="{{ house.nama }}"
+                {% if student and house.nama == student.house.nama %}
+                checked
+                {% endif %}
+            >
+            <label class="btn btn-outline-dark" for="{{ house.nama }}">{{ house.nama }}</label>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Apakah ketua house?</label>
+        <br>
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input
+                type="radio"
+                class="btn-check"
+                id="ya"
+                autocomplete="off"
+                name="ketua_house"
+                value="ya"
+                {% if student and student.house_led %}
+                checked
+                {% endif %}
+            >
+            <label class="btn btn-outline-dark" for="ya">Ya</label>
+            <input
+                type="radio"
+                class="btn-check"
+                id="tidak"
+                autocomplete="off"
+                name="ketua_house"
+                value="tidak"
+                {% if student and not student.house_led %}
+                checked
+                {% endif %}
+            >
+            <label class="btn btn-outline-dark" for="tidak">Tidak</label>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="ttl" class="form-label">TTL</label>
+        <input
+            class="form-control"
+            type="date"
+            id="ttl"
+            name="ttl"
+            value="{{ student.ttl | default('', True) }}"
+        >
+    </div>
+    <div class="mb-3">
+        <label for="hobi" class="form-label">Hobi</label>
+        <textarea name="hobi" id="hobi" class="form-control">{{student.hobi | default('', True) }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">IT Interest</label>
+        <br>
+        {% for interest in interests %}
+        {% set interest_id = interest.replace(' ', '_').lower() %}
+        <input
+            type="checkbox"
+            class="btn-check"
+            autocomplete="off"
+            id="{{ interest_id }}"
+            name="interests"
+            value="{{ interest }}"
+            {% if student and interest in student.interests %}
+            checked
+            {% endif %}
+        >
+        <label class="btn btn-outline-dark" for="{{ interest_id }}">{{ interest }}</label>
+        {% endfor %}
+    </div>
+    <h4>Sosial Media</h4>
+    <div class="mb-3">
+        <label for="twitter" class="form-label">Twitter</label>
+        <input
+            type="text"
+            class="form-control"
+            id="twitter"
+            name="twitter"
+            value="{{ student.twitter | default('', True) }}"
+        >
+    </div>
+    <div class="mb-3">
+        <label for="line" class="form-label">Line</label>
+        <input
+            type="text"
+            class="form-control"
+            id="line"
+            name="line"
+            value="{{ student.line | default('', True) }}"
+        >
+    </div>
+    <div class="mb-3">
+        <label for="instagram" class="form-label">Instagram</label>
+        <input
+            type="text"
+            class="form-control"
+            id="instagram"
+            name="instagram"
+            value="{{ student.instagram | default('', True) }}"
+        >
+    </div>
+    <h4>Perkenalan diri</h4>
+    <div class="mb-3">
+        <label for="foto_diri" class="form-label">Foto Diri</label>
+        <input
+            class="form-control"
+            type="file"
+            id="foto_diri"
+            name="foto_diri"
+            accept="image/jpeg, image/png"
+        >
+    </div>
+    <div class="mb-3">
+        <label for="video_diri" class="form-label">Video Diri</label>
+        <input
+            class="form-control"
+            type="url"
+            id="video_diri"
+            name="video_diri"
+            value="{{ student.video_diri | default('', True) }}"
+        >
+    </div>
+    <div class="mb-3">
+        <label for="message" class="form-label">Future Message</label>
+        <textarea
+            name="message"
+            id="message"
+            class="form-control"
+            maxlength="400"
+        >{{student.message | default('', True) }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="about" class="form-label">About Me</label>
+        <textarea
+            name="about"
+            id="about"
+            class="form-control"
+            maxlength="600"
+        >{{student.about | default('', True) }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mb-3">Submit</button>
+</form>
+{% endblock %}
