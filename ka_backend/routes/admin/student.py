@@ -8,6 +8,21 @@ from ka_backend.models import Student, House
 from ka_backend.plugins import templates
 
 router = APIRouter(prefix="/student")
+VALID_INTERESTS = [
+    "Data Science",
+    "Networking & Security",
+    "Competitive Programming",
+    "App Development",
+    "Web Development",
+    "UI/UX Design",
+    "Game Development",
+    "Artifical Intelligence",
+    "Cloud Computing",
+    "Product Manager",
+    "Quality Assurance",
+    "Business Intelligence",
+    "Internet of Things",
+]
 
 
 @router.get("/", response_class=HTMLResponse, name="student_index")
@@ -43,7 +58,13 @@ async def index(
 async def new_student(request: Request):
     houses = await House.objects.all()
     return templates.TemplateResponse(
-        "student/edit.html", {"request": request, "student": None, "houses": houses}
+        "student/edit.html",
+        {
+            "request": request,
+            "student": None,
+            "houses": houses,
+            "interests": VALID_INTERESTS,
+        },
     )
 
 
@@ -113,7 +134,12 @@ async def edit_student(request: Request, npm: int):
 
     return templates.TemplateResponse(
         "student/edit.html",
-        {"request": request, "student": student, "houses": houses},
+        {
+            "request": request,
+            "student": student,
+            "houses": houses,
+            "interests": VALID_INTERESTS,
+        },
     )
 
 

@@ -149,163 +149,21 @@
     <div class="mb-3">
         <label class="form-label">IT Interest</label>
         <br>
-        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="data_science"
-                autocomplete="off"
-                name="interests"
-                value="data_science"
-                {% if student and "data_science" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="data_science">Data Science</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="networking_&_security"
-                autocomplete="off"
-                name="interests"
-                value="networking_&_security"
-                {% if student and "networking_&_security" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="networking_&_security">Networking & Security</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="competitive_programming"
-                autocomplete="off"
-                name="interests"
-                value="competitive_programming"
-                {% if student and "competitive_programming" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="competitive_programming">Competitive Programming</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="app_development"
-                autocomplete="off"
-                name="interests"
-                value="app_development"
-                {% if student and "app_development" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="app_development">App Development</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="web_development"
-                autocomplete="off"
-                name="interests"
-                value="web_development"
-                {% if student and "web_development" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="web_development">Web Development</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="ui/ux_design"
-                autocomplete="off"
-                name="interests"
-                value="ui/ux_design"
-                {% if student and "ui/ux_design" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="ui/ux_design">UI/UX Design</label>
-        </div>
-        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="game_development"
-                autocomplete="off"
-                name="interests"
-                value="game_development"
-                {% if student and "game_development" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="game_development">Game Development</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="artificial_intelligence"
-                autocomplete="off"
-                name="interests"
-                value="artificial_intelligence"
-                {% if student and "artificial_intelligence" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="artificial_intelligence">Artificial Intelligence</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="cloud_computing"
-                autocomplete="off"
-                name="interests"
-                value="cloud_computing"
-                {% if student and "cloud_computing" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="cloud_computing">Cloud Computing</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="product_manager"
-                autocomplete="off"
-                name="interests"
-                value="product_manager"
-                {% if student and "product_manager" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="product_manager">Product Manager</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="quality_assurance"
-                autocomplete="off"
-                name="interests"
-                value="quality_assurance"
-            >
-            <label class="btn btn-outline-dark" for="quality_assurance">Quality Assurance</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="business_intelligence"
-                autocomplete="off"
-                name="interests"
-                value="business_intelligence"
-                {% if student and "business_intelligence" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="business_intelligence">Business Intelligence</label>
-            <input
-                type="checkbox"
-                class="btn-check"
-                id="internet_of_things"
-                autocomplete="off"
-                name="interests"
-                value="internet_of_things"
-                {% if student and "internet_of_things" in student.interests %}
-                checked
-                {% endif %}
-            >
-            <label class="btn btn-outline-dark" for="internet_of_things">Internet of Things</label>
-        </div>
+        {% for interest in interests %}
+        {% set interest_id = interest.replace(' ', '_').lower() %}
+        <input
+            type="checkbox"
+            class="btn-check"
+            autocomplete="off"
+            id="{{ interest_id }}"
+            name="interests"
+            value="{{ interest }}"
+            {% if student and interest in student.interests %}
+            checked
+            {% endif %}
+        >
+        <label class="btn btn-outline-dark" for="{{ interest_id }}">{{ interest }}</label>
+        {% endfor %}
     </div>
     <h4>Sosial Media</h4>
     <div class="mb-3">
