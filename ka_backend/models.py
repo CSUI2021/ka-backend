@@ -15,6 +15,7 @@ class Student(ormar.Model):
 
     npm = ormar.Integer(primary_key=True)
     username: str = ormar.String(max_length=128, nullable=True)
+    is_admin: bool = ormar.Boolean(default=False, nullable=False)
 
     # Data diri
     nama: str = ormar.String(max_length=100, nullable=True)
