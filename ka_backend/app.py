@@ -1,3 +1,5 @@
+import sentry_sdk
+from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 from fastapi import Depends, FastAPI, Request
 from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
@@ -41,6 +43,14 @@ app.include_router(StudentRouter)
 app.include_router(StoryRouter)
 
 app.add_middleware(SessionMiddleware, secret_key=settings.secret, https_only=True)
+
+if settings.sentry_url:
+    sentry_sdk.init(
+        settings.sentry_url,
+        traces_sample_rate=0.4,
+        sample_rate=0.5,
+    )
+    app.add_middleware(SentryAsgiMiddleware)
 
 
 @app.get("/", include_in_schema=False)
