@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="pt-5 pb-3">
+    <h2>Stories</h2>
+</div>
+{% endblock %}
+
+{% block content %}
+<div>
+    <p>Hello.</p>
+    <ul>
+        <li>
+            <a href="{{ url_for('story_index') }}">Story</a>
+        </li>
+        <li>
+            <a href="{{ url_for('student_index') }}">Student</a>
+        </li>
+        <li>
+            <a href="{{ url_for('sig_index') }}">SIG</a>
+        </li>
+        <li>
+            <a href="{{ url_for('competition_index') }}">Competition</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
