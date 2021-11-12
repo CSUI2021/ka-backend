@@ -4,8 +4,10 @@ import aiofiles
 import random
 import string
 from fastapi import UploadFile
+from markupsafe import functools
 
 from ka_backend.helper.settings import settings
+import anyio
 
 
 def generate_random(n: int) -> str:
@@ -25,7 +27,10 @@ async def save_file(
     else:
         filename = save_as or file.filename
 
-    target_path = settings.upload_path / category.lower() / filename
+    target_dir = settings.upload_path / category.lower()
+    target_path = target_dir / filename
+    await anyio.to_thread.run_sync(functools.partial(target_dir.mkdir, exist_ok=True))
+
     async with aiofiles.open(target_path, "wb") as f:
         await f.write(await file.read())
 
