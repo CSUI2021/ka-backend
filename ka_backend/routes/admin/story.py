@@ -62,13 +62,18 @@ async def do_story_edit(
     story_id: int,
     title: str = Form(...),
     detail: str = Form(...),
-    foto: Optional[List[UploadFile]] = File(...),
+    foto: List[UploadFile] = File(...),
 ):
     story = await Story.objects.get_or_none(id=story_id)
     if not story:
         raise HTTPException(404, detail="Story not found.")
 
-    if foto:
+    is_valid_photo = True
+    if len(foto) == 1:
+        is_valid_photo = bool(await foto[0].read(8))
+
+    if is_valid_photo:
+        await foto[0].seek(0)
         foto_paths = [await save_file("Story", p) for p in foto]
     else:
         foto_paths = story.foto

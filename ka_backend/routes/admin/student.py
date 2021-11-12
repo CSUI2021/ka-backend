@@ -183,7 +183,10 @@ async def do_edit_student(
                 ex_house_led = await student.house_led.load()
                 await ex_house_led.ketua.remove(student)
 
-        if foto_diri:
+        is_valid_photo = bool(await foto_diri.read(8))
+
+        if is_valid_photo:
+            await foto_diri.seek(0)
             foto_path = await save_file("Student", foto_diri)
         else:
             foto_path = student.foto_diri
