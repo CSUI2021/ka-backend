@@ -1,6 +1,6 @@
 import sys
 
-from pydantic import BaseSettings
+from pydantic import BaseSettings, DirectoryPath
 
 
 class Settings(BaseSettings):
@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     secret: str
     hostname: str
     sentry_url: str = ""
+    upload_path: DirectoryPath
 
 
 if "pytest" in sys.modules:
@@ -15,6 +16,7 @@ if "pytest" in sys.modules:
         database_url="sqlite:///test.db",
         secret="TEST",
         hostname="http://localhost:3000",
+        upload_path="./test/upload",
     )
 else:
     settings = Settings(".env")
