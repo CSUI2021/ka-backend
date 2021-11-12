@@ -11,6 +11,16 @@
 {% endblock %}
 
 {% block content %}
+<div class="row">
+    {% for img_url in story.foto %}
+    <div class="col-md">
+        <figure class="figure">
+            <img src="/assets/story/{{ img_url }}" class="figure-img img-fluid rounded">
+        </figure>
+    </div>
+    {% endfor %}
+</div>
+
 <form method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="title" class="form-label">Story Title</label>
