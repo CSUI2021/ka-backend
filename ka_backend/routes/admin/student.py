@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
+from ka_backend.helper.files import save_file
 
 from ka_backend.models import House, Student
 from ka_backend.plugins import templates
@@ -88,7 +89,6 @@ async def do_new_student(
     message: str = Form(...),
     about: str = Form(...),
 ):
-    # TODO: Foto diri
     try:
         house_object = await House.objects.get(nama=house)
 
@@ -98,6 +98,7 @@ async def do_new_student(
         else:
             house_led = None
 
+        foto_path = await save_file("Student", foto_diri)
         await Student.objects.create(
             npm=npm,
             username=username,
@@ -111,6 +112,7 @@ async def do_new_student(
             twitter=twitter,
             line=line,
             instagram=instagram,
+            foto_diri=foto_path,
             video_diri=video_diri,
             message=message,
             about=about,
@@ -157,12 +159,11 @@ async def do_edit_student(
     twitter: str = Form(...),
     line: str = Form(...),
     instagram: str = Form(...),
-    foto_diri: UploadFile = File(...),
+    foto_diri: Optional[UploadFile] = File(...),
     video_diri: str = Form(...),
     message: str = Form(...),
     about: str = Form(...),
 ):
-    # TODO: Foto diri
     student = await Student.objects.select_all().get_or_none(npm=npm)
     if not student:
         raise HTTPException(404, detail="student not found.")
@@ -182,6 +183,11 @@ async def do_edit_student(
                 ex_house_led = await student.house_led.load()
                 await ex_house_led.ketua.remove(student)
 
+        if foto_diri:
+            foto_path = await save_file("Student", foto_diri)
+        else:
+            foto_path = student.foto_diri
+
         await student.update(
             nama=nama,
             jurusan=jurusan,
@@ -193,6 +199,7 @@ async def do_edit_student(
             twitter=twitter,
             line=line,
             instagram=instagram,
+            foto_diri=foto_path,
             video_diri=video_diri,
             message=message,
             about=about,

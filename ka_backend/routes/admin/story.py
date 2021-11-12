@@ -1,9 +1,10 @@
 from math import ceil
-from typing import List
+from typing import List, Optional
 
 from black import traceback
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
+from ka_backend.helper.files import save_file
 
 from ka_backend.models import Story
 from ka_backend.plugins import templates
@@ -61,14 +62,18 @@ async def do_story_edit(
     story_id: int,
     title: str = Form(...),
     detail: str = Form(...),
-    foto: List[UploadFile] = File(...),
+    foto: Optional[List[UploadFile]] = File(...),
 ):
     story = await Story.objects.get_or_none(id=story_id)
     if not story:
         raise HTTPException(404, detail="Story not found.")
 
-    # TODO: upload photos
-    await story.update(title=title, detail=detail)
+    if foto:
+        foto_paths = [await save_file("Story", p) for p in foto]
+    else:
+        foto_paths = story.foto
+
+    await story.update(title=title, detail=detail, foto=foto_paths)
     request.session["alert"] = ("success", "Successfully edited story.")
     return RedirectResponse(url=request.url_for("story_index"), status_code=302)
 
@@ -85,10 +90,15 @@ async def do_new_story(
     request: Request,
     title: str = Form(...),
     detail: str = Form(...),
-    foto: List[UploadFile] = File(...),
+    foto: Optional[List[UploadFile]] = File(...),
 ):
     try:
-        await Story.objects.create(title=title, detail=detail, foto=[])
+        if foto:
+            foto_paths = [await save_file("Story", p) for p in foto]
+        else:
+            foto_paths = []
+
+        await Story.objects.create(title=title, detail=detail, foto=foto_paths)
         request.session["alert"] = ("success", "Story created.")
     except:  # noqa
         traceback.print_exc()

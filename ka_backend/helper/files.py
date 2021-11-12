@@ -26,7 +26,7 @@ async def save_file(
         filename = save_as or file.filename
 
     target_path = settings.upload_path / category.lower() / filename
-    async with aiofiles.open(target_path, "w") as f:
+    async with aiofiles.open(target_path, "wb") as f:
         await f.write(await file.read())
 
     return filename

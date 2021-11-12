@@ -4,6 +4,7 @@ from fastapi import Depends, FastAPI, Request
 from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 
 from ka_backend import __description__, __version__
@@ -42,6 +43,7 @@ app.include_router(CompetitionRouter)
 app.include_router(StudentRouter)
 app.include_router(StoryRouter)
 
+app.mount("/assets", StaticFiles(directory=settings.upload_path), name="assets")
 app.add_middleware(SessionMiddleware, secret_key=settings.secret, https_only=True)
 
 if settings.sentry_url:

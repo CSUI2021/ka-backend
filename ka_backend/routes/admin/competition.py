@@ -1,8 +1,10 @@
 from math import ceil
+from typing import Optional
 
 from black import traceback
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
+from ka_backend.helper.files import save_file
 
 from ka_backend.models import Competition
 from ka_backend.plugins import templates
@@ -41,7 +43,9 @@ async def view_index(
     )
 
 
-@router.get("/{competition_id}/edit", response_class=HTMLResponse, name="edit_competition")
+@router.get(
+    "/{competition_id}/edit", response_class=HTMLResponse, name="edit_competition"
+)
 async def view_edit_competition(request: Request, competition_id: int):
     competition = await Competition.objects.get_or_none(id=competition_id)
     if not competition:
@@ -61,14 +65,19 @@ async def edit_competition(
     request: Request,
     competition_id: int,
     nama: str = Form(...),
-    foto: UploadFile = File(...),
+    foto: Optional[UploadFile] = File(...),
     link: str = Form(...),
 ):
     competition = await Competition.objects.get_or_none(id=competition_id)
     if not competition:
         raise HTTPException(404, detail="Competition not found.")
-    # TODO: store foto
-    await competition.update(nama=nama, link=link)
+
+    if foto:
+        foto_path = await save_file("Competition", foto)
+    else:
+        foto_path = competition.foto
+
+    await competition.update(nama=nama, link=link, foto=foto_path)
     request.session["alert"] = ("success", "Successfully edited competition.")
     return RedirectResponse(url=request.url_for("competition_index"), status_code=302)
 
@@ -88,7 +97,12 @@ async def new_competition(
     link: str = Form(...),
 ):
     try:
-        await Competition.objects.create(nama=nama, link=link)
+        if foto:
+            foto_path = await save_file("Competition", foto)
+        else:
+            foto_path = None
+
+        await Competition.objects.create(nama=nama, link=link, foto=foto_path)
         request.session["alert"] = ("success", "Competition created.")
     except:  # noqa
         traceback.print_exc()
@@ -99,7 +113,11 @@ async def new_competition(
     return RedirectResponse(url=request.url_for("competition_index"), status_code=302)
 
 
-@router.post("/{competition_id}/delete", response_class=RedirectResponse, name="delete_competition")
+@router.post(
+    "/{competition_id}/delete",
+    response_class=RedirectResponse,
+    name="delete_competition",
+)
 async def delete_competition(
     request: Request,
     competition_id: int,
