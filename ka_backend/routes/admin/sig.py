@@ -64,23 +64,16 @@ async def edit_sig(
     sig_id: int,
     nama: str = Form(...),
     detail: str = Form(...),
-    foto: Optional[UploadFile] = File(...),
     is_it_interest: Optional[bool] = Form(False),
 ):
     sig = await SIG.objects.get_or_none(id=sig_id)
     if not sig:
         raise HTTPException(404, detail="SIG not found.")
 
-    if foto:
-        foto_path = await save_file("SIG", foto)
-    else:
-        foto_path = sig.foto
-
     await sig.update(
         nama=nama,
         detail=detail,
         is_it_interest=is_it_interest,
-        foto=foto_path,
     )
     request.session["alert"] = ("success", "Successfully edited sig.")
     return RedirectResponse(url=request.url_for("sig_index"), status_code=302)
@@ -98,20 +91,13 @@ async def new_sig(
     request: Request,
     nama: str = Form(...),
     detail: str = Form(...),
-    foto: Optional[UploadFile] = File(...),
     is_it_interest: Optional[bool] = Form(False),
 ):
     try:
-        if foto:
-            foto_path = await save_file("SIG", foto)
-        else:
-            foto_path = None
-
         await SIG.objects.create(
             nama=nama,
             detail=detail,
             is_it_interest=is_it_interest,
-            foto=foto_path,
         )
         request.session["alert"] = ("success", "SIG created.")
     except:  # noqa

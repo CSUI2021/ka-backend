@@ -26,18 +26,7 @@
         <label for="detail" class="form-label">Detail</label>
         <textarea class="form-control" id="detail" name="detail">{{sig.detail | default('', True) }}</textarea>
     </div>
-
-    <div class="mb-3">
-        <label for="foto" class="form-label">Foto</label>
-        <input
-            class="form-control"
-            type="file"
-            id="foto"
-            name="foto"
-            accept="image/jpeg, image/png"
-        />
-    </div>
-
+    
     <div class="mb-3 form-check">
         <label for="is_it_interest" class="form-label">IT interest</label>
         <input
