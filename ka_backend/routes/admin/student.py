@@ -36,9 +36,9 @@ async def index(
     ),
 ):
     total_students = await Student.objects.count()
-    students = await Student.objects.select_related("house").paginate(page, 10).all()
+    students = await Student.objects.select_related("house").paginate(page, 25).all()
 
-    total_pages = ceil(total_students / 10)
+    total_pages = ceil(total_students / 25)
     has_prev = page > 1
     has_next = page < total_pages
 
