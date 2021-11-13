@@ -45,7 +45,9 @@ async def setup_db():
         "Horror",
         "Romance",
     ]
-    await House.objects.bulk_create([House(nama=name) for name in HOUSES])
+    await House.objects.bulk_create(
+        [House(nama=name, codename=name.lower()) for name in HOUSES]
+    )
 
     with open("tests/data/users.json", "r") as f:
         await Student.objects.bulk_create([Student(**data) for data in json.load(f)])

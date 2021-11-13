@@ -40,6 +40,7 @@ class SIG(BaseModel):
 
 class House(BaseModel):
     id: int
+    codename: str
     nama: str
 
 

@@ -56,7 +56,9 @@ async def list(
         students = students.filter(jurusan__exact=major)
         redis_key += "--" + major
     if house:
-        students = students.filter(house__nama__in=house)
+        # Make all houses lowercase for case incensitive result
+        house = [h.lower() for h in house]
+        students = students.filter(house__codename__in=house)
         redis_key += "--" + "--".join(house)
 
     if sort == "asc":

@@ -14,7 +14,7 @@ class Student(ormar.Model):
         tablename = "students"
 
     npm = ormar.Integer(primary_key=True)
-    username: str = ormar.String(max_length=128, nullable=True)
+    username: str = ormar.String(max_length=128, nullable=True, index=True)
     is_admin: bool = ormar.Boolean(default=False, nullable=False)
 
     # Data diri
@@ -63,6 +63,7 @@ class House(ormar.Model):
         tablename = "houses"
 
     id: int = ormar.Integer(primary_key=True)
+    codename: str = ormar.String(max_length=16, index=True)
     nama: str = ormar.String(max_length=32)
 
 
