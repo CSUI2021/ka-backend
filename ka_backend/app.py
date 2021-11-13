@@ -11,6 +11,7 @@ from ka_backend import __description__, __version__
 from ka_backend.helper.database import database
 from ka_backend.helper.settings import settings
 from ka_backend.models import Student
+from fastapi.middleware.cors import CORSMiddleware
 from ka_backend.plugins import manager
 from ka_backend.responses import ErrorMessage, StudentSummary
 from ka_backend.routes.admin import router as AdminRouter
@@ -30,6 +31,12 @@ tags_metadata = [
     {"name": "Story", "description": "Stories related operations."},
 ]
 
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    settings.frontend_url,
+]
+
 app = FastAPI(
     openapi_tags=tags_metadata,
     title="Karya Angkatan",
@@ -45,6 +52,13 @@ app.include_router(StoryRouter)
 
 app.mount("/assets", StaticFiles(directory=settings.upload_path), name="assets")
 app.add_middleware(SessionMiddleware, secret_key=settings.secret, https_only=True)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 if settings.sentry_url:
     sentry_sdk.init(
