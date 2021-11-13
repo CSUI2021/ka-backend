@@ -3,8 +3,8 @@ from typing import List, Optional
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
-from ka_backend.helper.files import save_file
 
+from ka_backend.helper.files import save_file
 from ka_backend.models import House, Student
 from ka_backend.plugins import templates
 

@@ -1,5 +1,7 @@
 from datetime import timedelta
+from typing import Optional
 
+import aioredis
 from fastapi.templating import Jinja2Templates
 from fastapi_login import LoginManager
 from starlette.background import BackgroundTask
@@ -35,6 +37,14 @@ manager = LoginManager(
     use_header=False,
     default_expiry=timedelta(hours=24),
 )
+
+redis: Optional[aioredis.Redis] = None
+if settings.redis_url:
+    redis = aioredis.from_url(
+        settings.redis_url,
+        encoding="utf-8",
+        decode_responses=True,
+    )
 
 
 @manager.user_loader()  # type: ignore

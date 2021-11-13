@@ -1,8 +1,10 @@
 from typing import List, Literal, Optional
 
+import ujson
 from fastapi import APIRouter, HTTPException, Query, status
 
 from ka_backend.models import Student
+from ka_backend.plugins import redis
 from ka_backend.responses import ErrorMessage
 from ka_backend.responses import Student as StudentFull
 from ka_backend.responses import StudentSummary
@@ -29,7 +31,7 @@ async def list(
         None,
         description="Filters by major name.",
     ),
-    sort: Optional[Literal["asc", "desc"]] = Query(
+    sort: Literal["asc", "desc"] = Query(
         "asc",
         description="Name sorting order.",
     ),
@@ -44,23 +46,37 @@ async def list(
         description="Number of results to return per page.",
     ),
 ):
+    redis_key = "student--list"
+
     students = Student.objects.select_related("house")
     if name:
         students = students.filter(nama__icontains=name)
+        redis_key += "--" + name.lower()
     if major:
         students = students.filter(jurusan__exact=major)
+        redis_key += "--" + major
     if house:
         students = students.filter(house__nama__in=house)
+        redis_key += "--" + "--".join(house)
 
     if sort == "asc":
         students = students.order_by("nama")
     elif sort == "desc":
         students = students.order_by("-nama")
 
+    redis_key += "--" + sort
+    if redis:
+        result_cached = await redis.get(redis_key)
+        if result_cached:
+            return ujson.loads(result_cached)
+
     result = [
         await user.get_summary()
         for user in await students.paginate(page=page, page_size=limit).all()
     ]
+
+    if redis:
+        await redis.set(redis_key, ujson.dumps(result))
     return result
 
 
@@ -75,9 +91,18 @@ async def list(
     },
 )
 async def show(username: str):
+    redis_key = "student--detail--" + username
+    if redis:
+        result_cached = await redis.get(redis_key)
+        if result_cached:
+            return ujson.loads(result_cached)
+
     student = await Student.objects.select_related("house").get_or_none(
         username=username
     )
     if not student:
         raise HTTPException(status_code=404, detail="No such student found.")
+
+    if redis:
+        await redis.set(redis_key, ujson.dumps(student.dict()))
     return student

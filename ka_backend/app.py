@@ -1,17 +1,17 @@
 import sentry_sdk
-from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 from fastapi import Depends, FastAPI, Request
 from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from ka_backend import __description__, __version__
 from ka_backend.helper.database import database
 from ka_backend.helper.settings import settings
 from ka_backend.models import Student
-from fastapi.middleware.cors import CORSMiddleware
 from ka_backend.plugins import manager
 from ka_backend.responses import ErrorMessage, StudentSummary
 from ka_backend.routes.admin import router as AdminRouter

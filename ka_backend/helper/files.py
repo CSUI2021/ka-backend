@@ -1,13 +1,13 @@
+import random
+import string
 from typing import Literal
 
 import aiofiles
-import random
-import string
+import anyio
 from fastapi import UploadFile
 from markupsafe import functools
 
 from ka_backend.helper.settings import settings
-import anyio
 
 
 def generate_random(n: int) -> str:
