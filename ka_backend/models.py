@@ -28,7 +28,7 @@ class Student(ormar.Model):
     hobi: str = ormar.String(max_length=50, nullable=True)
 
     # Social media
-    twitter: Optional[str] = ormar.String(max_length=16, nullable=True)
+    twitter: Optional[str] = ormar.String(max_length=32, nullable=True)
     line: Optional[str] = ormar.String(max_length=50, nullable=True)
     instagram: Optional[str] = ormar.String(max_length=32, nullable=True)
 
