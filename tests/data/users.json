@@ -1,5 +1,5 @@
 [{
-    "npm": 210684283,
+    "npm": 2100020000,
     "username": "test",
     "nama": "Test User",
     "jurusan": "ilmu_komputer",
@@ -15,7 +15,7 @@
     "message": "lulus cum laude amin",
     "about": "Aku keren"
 }, {
-    "npm": 123,
+    "npm": 2100000000,
     "username": "nama",
     "nama": "Sebuah Nama",
     "jurusan": "ilmu_komputer",
@@ -31,8 +31,24 @@
     "message": "lulus cum laude amin",
     "about": "Aku keren"
 }, {
-    "npm": 111,
+    "npm": 2100003001,
     "username": "zzznama",
+    "nama": "ZzzzzNama",
+    "jurusan": "sistem_informasi",
+    "ttl": "Jakarta, 12 Agustus 2003",
+    "hobi": "Coding",
+    "twitter": null,
+    "line": null,
+    "instagram": null,
+    "foto_diri": null,
+    "video_diri": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "house": 1,
+    "interests": [],
+    "message": "lulus cum laude amin",
+    "about": "Aku keren"
+}, {
+    "npm": 10000030,
+    "username": "zzzaaanama",
     "nama": "ZzzzzNama",
     "jurusan": "sistem_informasi",
     "ttl": "Jakarta, 12 Agustus 2003",

@@ -48,7 +48,7 @@ async def list(
 ):
     redis_key = "student--list"
 
-    students = Student.objects.select_related("house")
+    students = Student.objects.select_related("house").filter(npm__gte=2100000000)
     if name:
         students = students.filter(nama__icontains=name)
         redis_key += "--" + name.lower()

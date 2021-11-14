@@ -15,7 +15,7 @@ def test_list(client: TestClient):
         "jurusan": "ilmu_komputer",
         "foto_diri": None,
         "house_name": "Musical",
-        "is_2021": False,
+        "is_2021": True,
     }
 
 
