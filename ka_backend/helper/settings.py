@@ -1,4 +1,5 @@
 import sys
+from typing import List
 
 from pydantic import BaseSettings, DirectoryPath
 
@@ -7,7 +8,7 @@ class Settings(BaseSettings):
     database_url: str
     secret: str
     hostname: str
-    frontend_url: str
+    frontend_url: List[str]
     upload_path: DirectoryPath
     sentry_url: str = ""
     redis_url: str = ""

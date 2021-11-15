@@ -34,7 +34,7 @@ tags_metadata = [
 origins = [
     "http://localhost",
     "http://localhost:3000",
-    settings.frontend_url,
+    *settings.frontend_url,
 ]
 
 app = FastAPI(
