@@ -13,7 +13,7 @@ from ka_backend.helper.database import database
 from ka_backend.helper.settings import settings
 from ka_backend.models import Student
 from ka_backend.plugins import manager
-from ka_backend.responses import ErrorMessage, StudentSummary
+from ka_backend.responses import ErrorMessage, UserInfo
 from ka_backend.routes.admin import router as AdminRouter
 from ka_backend.routes.auth import router as AuthRouter
 from ka_backend.routes.competition import router as CompetitionRouter
@@ -76,7 +76,7 @@ async def root():
 
 @app.get(
     "/me",
-    response_model=StudentSummary,
+    response_model=UserInfo,
     summary="Get Current User",
     tags=["Users"],
     responses={

@@ -55,6 +55,8 @@ class Student(ormar.Model):
             "jurusan": self.jurusan,
             "foto_diri": self.foto_diri,
             "house_name": house_name,
+            "line": self.line,
+            "instagram": self.instagram,
         }
 
 

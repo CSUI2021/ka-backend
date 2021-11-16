@@ -16,6 +16,14 @@ class StudentSummary(BaseModel):
     jurusan: t.Literal["ilmu_komputer", "sistem_informasi"]
     foto_diri: t.Optional[str]
     house_name: t.Optional[str]
+    line: t.Optional[str]
+    instagram: t.Optional[str]
+    is_2021: bool
+
+
+class UserInfo(BaseModel):
+    username: str
+    nama: str
     is_2021: bool
 
 
