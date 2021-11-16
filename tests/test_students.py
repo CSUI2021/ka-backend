@@ -17,6 +17,8 @@ def test_list(client: TestClient):
         "foto_diri": None,
         "house_name": "Musical",
         "is_2021": True,
+        "line": "asd",
+        "instagram": None,
     }
 
 
@@ -129,7 +131,7 @@ def test_student_detail(client: TestClient):
     assert result["hobi"] == "Gabut"
     assert not result["twitter"]
     assert not result["line"]
-    assert not result["instagram"]
+    assert result["instagram"] == "test123"
     assert not result["foto_diri"]
     assert result["video_diri"] == "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     assert result["house"]["id"] == 1
