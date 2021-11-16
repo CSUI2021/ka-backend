@@ -1,3 +1,4 @@
+import math
 from typing import List, Literal, Optional
 
 import ujson
@@ -5,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Query, status
 
 from ka_backend.models import Student
 from ka_backend.plugins import redis
-from ka_backend.responses import ErrorMessage
+from ka_backend.responses import ErrorMessage, PagedData
 from ka_backend.responses import Student as StudentFull
 from ka_backend.responses import StudentSummary
 
@@ -15,7 +16,7 @@ router = APIRouter(prefix="/student", tags=["Students"])
 @router.get(
     "/list",
     status_code=status.HTTP_200_OK,
-    response_model=List[StudentSummary],
+    response_model=PagedData[StudentSummary],
     summary="Get Student List",
 )
 async def list(
@@ -77,9 +78,17 @@ async def list(
         for user in await students.paginate(page=page, page_size=limit).all()
     ]
 
+    max_page = math.ceil((await students.count()) / limit)
+    paged_result = {
+        "data": result,
+        "max_page": max_page,
+        "has_next": page < max_page,
+        "has_prev": page > 1,
+    }
+
     if redis:
-        await redis.set(redis_key, ujson.dumps(result))
-    return result
+        await redis.set(redis_key, ujson.dumps(paged_result))
+    return paged_result
 
 
 @router.get(

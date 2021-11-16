@@ -1,6 +1,9 @@
 import typing as t
 
 from pydantic import BaseModel
+from pydantic.generics import GenericModel
+
+DataT = t.TypeVar("DataT")
 
 
 class ErrorMessage(BaseModel):
@@ -66,3 +69,10 @@ class Student(BaseModel):
     message: str
     about: str
     interests: t.List[str]
+
+
+class PagedData(GenericModel, t.Generic[DataT]):
+    data: t.List[DataT]
+    has_prev: bool
+    has_next: bool
+    max_page: int

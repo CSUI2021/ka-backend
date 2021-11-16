@@ -23,7 +23,7 @@ if "pytest" in sys.modules:
         secret="TEST",
         hostname="http://localhost:3000",
         upload_path="./test/upload",
-        frontend_url="",
+        frontend_url=[""],
     )
 else:
     settings = Settings(".env")

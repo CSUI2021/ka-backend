@@ -6,6 +6,7 @@ def test_list(client: TestClient):
     assert response.status_code == 200
 
     result = response.json()
+    result = result["data"]
     assert len(result) == 3
 
     first_result = result[0]
@@ -26,7 +27,7 @@ def test_pagination(client: TestClient):
     assert response.status_code == 200
 
     result = response.json()
-    assert len(result) == 0
+    assert len(result["data"]) == 0
 
     ####################
     # Non-positive page
@@ -36,6 +37,16 @@ def test_pagination(client: TestClient):
     response = client.get("/student/list?page=-1")
     assert response.status_code == 422
 
+    ####################
+    # Page data
+    response = client.get("/student/list?page=2&limit=1")
+    assert response.status_code == 200
+
+    result = response.json()
+    assert result["has_next"]
+    assert result["has_prev"]
+    assert result["max_page"] == 3
+
 
 def test_search(client: TestClient):
     ####################
@@ -44,7 +55,7 @@ def test_search(client: TestClient):
     assert response.status_code == 200
 
     result = response.json()
-    names = [r["nama"] for r in result]
+    names = [r["nama"] for r in result["data"]]
     assert len(names) == 2
     assert "ZzzzzNama" in names
     assert "Sebuah Nama" in names
@@ -55,7 +66,7 @@ def test_search(client: TestClient):
     assert response.status_code == 200
 
     result = response.json()
-    assert result[0]["nama"] == "ZzzzzNama"
+    assert result["data"][0]["nama"] == "ZzzzzNama"
 
     ####################
     # Invalid sorting
@@ -70,6 +81,7 @@ def test_filters(client: TestClient):
     assert response.status_code == 200
 
     result = response.json()
+    result = result["data"]
     assert len(result) == 2
     assert result[0]["house_name"] == "Space"
 
@@ -79,7 +91,7 @@ def test_filters(client: TestClient):
     assert response.status_code == 200
 
     result = response.json()
-    assert len(result) == 3
+    assert len(result["data"]) == 3
 
     ####################
     # Nonexistent house
@@ -87,7 +99,7 @@ def test_filters(client: TestClient):
     assert response.status_code == 200
 
     result = response.json()
-    assert len(result) == 0
+    assert len(result["data"]) == 0
 
     ####################
     # Major filter
@@ -95,6 +107,7 @@ def test_filters(client: TestClient):
     assert response.status_code == 200
 
     result = response.json()
+    result = result["data"]
     assert len(result) == 1
     assert result[0]["nama"] == "ZzzzzNama"
     assert result[0]["jurusan"] == "sistem_informasi"
