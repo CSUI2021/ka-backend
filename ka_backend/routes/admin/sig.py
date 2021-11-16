@@ -2,10 +2,9 @@ from math import ceil
 from typing import Optional
 
 from black import traceback
-from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
+from fastapi import APIRouter, Form, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 
-from ka_backend.helper.files import save_file
 from ka_backend.models import SIG
 from ka_backend.plugins import templates
 
