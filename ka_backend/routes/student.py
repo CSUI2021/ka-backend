@@ -47,7 +47,7 @@ async def list(
         description="Number of results to return per page.",
     ),
 ):
-    redis_key = "student--list"
+    redis_key = f"student--list--{page}--{limit}"
 
     students = Student.objects.select_related("house").filter(npm__gte=2100000000)
     if name:
